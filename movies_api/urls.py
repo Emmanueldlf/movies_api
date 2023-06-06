@@ -32,4 +32,5 @@ urlpatterns = [
     path('',include(router.urls)),
     path('admin/', admin.site.urls),
     path('movies_list/',views.MoviesClassView.as_view(),name="movies_list"),
+    path('list/',views.list,name="list"),
 ]+static(settings.MEDIA_URL,document_root=settings.MEDIA_ROOT)

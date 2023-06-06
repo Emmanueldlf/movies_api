@@ -3,6 +3,7 @@ from rest_framework import viewsets
 from .serializers import MovieSerializer
 from .models import MovieData
 from django.views.generic.list import ListView
+from django.core.paginator import Paginator
 
 # Create your views here.
 class MovieViewSet(viewsets.ModelViewSet):
@@ -17,8 +18,12 @@ class ActionViewSet(viewsets.ModelViewSet):
     queryset = MovieData.objects.filter(category='action')
     serializer_class = MovieSerializer
 
-def movies_list(request):
+def list(request):
     movie_objects = MovieData.objects.all()
+    paginator = Paginator(movie_objects,4)
+    page = request.GET.get('page')
+    movie_objects = paginator.get_page(page)
+
     return render(request,'movies/movies_list.html',{'movie_objects':movie_objects})
 
 class MoviesClassView(ListView):
